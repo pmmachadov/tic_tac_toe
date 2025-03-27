@@ -32,7 +32,6 @@ function initGame() {
 
 function makeMove(gameState, index) {
   const { board, turn, winner } = gameState;
-  // If the square is already taken or if there is a winner, do nothing.
   if (board[index] || winner) return gameState;
 
   const newBoard = board.slice();
