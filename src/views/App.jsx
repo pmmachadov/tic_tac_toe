@@ -19,7 +19,11 @@ function App() {
   return (
     <div className="app">
       <h1>Tic Tac Toe</h1>
-      <Board board={gameState.board} onSquareClick={onSquareClick} />
+      <Board
+        board={gameState.board}
+        winningCombo={gameState.winningCombo}
+        onSquareClick={onSquareClick}
+      />
       <div className="info">
         {gameState.winner ? (
           gameState.winner === "BoardisFull" ? (
