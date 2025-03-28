@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import confetti from "canvas-confetti";
 import "../App.css";
 import Board from "./Board";
 import { initGame } from "../models/gameModel";
@@ -6,6 +7,28 @@ import { handleSquareClick, handleReset } from "../controllers/gameController";
 
 function App() {
   const [gameState, setGameState] = useState(initGame());
+
+  useEffect(() => {
+    if (gameState.winner && gameState.winner !== "Board is Full") {
+      confetti({
+        particleCount: 2000,
+        spread: 500,
+        origin: { y: 0.6 },
+        colors: [
+          "#bb0000",
+          "#ffffff",
+          "#00bb00",
+          "#0000bb",
+          "#bb00bb",
+          "#00bbbb",
+          "#bb00bb",
+          "#ff0000",
+          "#00ff00",
+        ],
+        shapes: ["circle"],
+      });
+    }
+  }, [gameState.winner]);
 
   const onSquareClick = (index) => {
     const newState = handleSquareClick(gameState, index);
@@ -26,8 +49,8 @@ function App() {
       />
       <div className="info">
         {gameState.winner ? (
-          gameState.winner === "BoardisFull" ? (
-            <p>BoardisFull!</p>
+          gameState.winner === "Board is Full" ? (
+            <p>¡Board is full!</p>
           ) : (
             <p>Winner: {gameState.winner}</p>
           )
@@ -35,7 +58,7 @@ function App() {
           <p>Turn: {gameState.turn}</p>
         )}
       </div>
-      <button onClick={onReset}>Reset Game</button>
+      <button onClick={onReset}>Restart Game</button>
     </div>
   );
 }
