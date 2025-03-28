@@ -64,6 +64,33 @@ button {
 }
 
 button:hover {
-    background-color: rgb(159, 83, 200);
+    background-color: rgb(202, 217, 115);
     font-weight: bold;
+}
+
+@media (max-width: 600px) {
+    .board {
+        grid-template-columns: repeat(3, 70px);
+        grid-template-rows: repeat(3, 70px);
+    }
+
+    .square {
+        height: 70px;
+        width: 70px;
+        font-size: 1.5rem;
+    }
+
+    .app {
+        margin-top: 1rem;
+        padding: 0 1rem;
+    }
+
+    button {
+        padding: 15px 25px;
+        font-size: 0.9rem;
+    }
+
+    .info {
+        font-size: 1.2rem;
+    }
 }
