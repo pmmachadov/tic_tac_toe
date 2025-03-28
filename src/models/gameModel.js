@@ -44,7 +44,7 @@ export function makeMove(gameState, index) {
     turn: winnerFound || isBoardisFull ? turn : nextTurn,
     winner: (() => {
       if (winnerFound) return winnerFound;
-      if (isBoardisFull) return "BoardisFull";
+      if (isBoardisFull) return "Board is Full";
       return null;
     })(),
   };
