@@ -36,6 +36,12 @@
     background-color: #5baaff;
 }
 
+.square.highlight {
+    background-color: rgb(255, 234, 79);
+    border-color: rgb(196, 0, 0);
+    border-width: 0.3rem;
+}
+
 .info {
     font-size: 1.5rem;
     margin-bottom: 1rem;

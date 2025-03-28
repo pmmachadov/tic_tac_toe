@@ -1,16 +1,25 @@
 import React from "react";
-import Square from "./Square";
 
-export default function Board({ board, onSquareClick }) {
+export default function Board({ board, winningCombo, onSquareClick }) {
   return (
     <div className="board">
-      {board.map((value, index) => (
-        <Square
-          key={index}
-          value={value}
-          onClick={() => onSquareClick(index)}
-        />
-      ))}
+      {board.map((value, index) => {
+        const squareClass =
+          winningCombo && winningCombo.includes(index) ? "highlight" : "";
+        return (
+          <button
+            key={`square-${value}-${index}`}
+            className={`square ${squareClass}`}
+            onClick={() => onSquareClick(index)}
+            tabIndex="0"
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") onSquareClick(index);
+            }}
+          >
+            {value}
+          </button>
+        );
+      })}
     </div>
   );
 }
