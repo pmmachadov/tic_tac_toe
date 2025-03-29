@@ -7,6 +7,7 @@ import { handleSquareClick, handleReset } from "../controllers/gameController";
 
 function App() {
   const [gameState, setGameState] = useState(initGame());
+  const [darkMode, setDarkMode] = useState(false);
 
   useEffect(() => {
     if (gameState.winner && gameState.winner !== "Board is Full") {
@@ -24,6 +25,9 @@ function App() {
           "#bb00bb",
           "#ff0000",
           "#00ff00",
+          "#ffff00",
+          "#ff69b4",
+          "#ffa500",
         ],
         shapes: ["circle"],
       });
@@ -39,8 +43,19 @@ function App() {
     setGameState(handleReset());
   };
 
+  const toggleTheme = () => {
+    setDarkMode((prev) => !prev);
+  };
+
   return (
-    <div className="app">
+    <div className={`app ${darkMode ? "dark" : ""}`}>
+      <button type="button" className="toggle-container" onClick={toggleTheme}>
+        <div className="toggle-switch">
+          <div className={`toggle-thumb ${darkMode ? "dark" : "light"}`}></div>
+        </div>
+        <span>{darkMode ? "Dark Mode" : "Light Mode"}</span>
+      </button>
+
       <h1>Tic Tac Toe</h1>
       <Board
         board={gameState.board}
@@ -49,11 +64,15 @@ function App() {
       />
       <div className="info">
         {gameState.winner ? (
-          gameState.winner === "Board is Full" ? (
-            <p>¡Board is full!</p>
-          ) : (
-            <p>Winner: {gameState.winner}</p>
-          )
+          (() => {
+            const winnerMessage =
+              gameState.winner === "Board is Full" ? (
+                <p>¡Board is full!</p>
+              ) : (
+                <p>Winner: {gameState.winner}</p>
+              );
+            return winnerMessage;
+          })()
         ) : (
           <p>Turn: {gameState.turn}</p>
         )}
