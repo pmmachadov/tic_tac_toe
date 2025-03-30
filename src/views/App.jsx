@@ -6,8 +6,15 @@ import { initGame } from "../models/gameModel";
 import { handleSquareClick, handleReset } from "../controllers/gameController";
 
 function App() {
-  const [gameState, setGameState] = useState(initGame());
-  const [darkMode, setDarkMode] = useState(false);
+  const [gameState, setGameState] = useState(() => {
+    const savedState = localStorage.getItem("gameState");
+    return savedState ? JSON.parse(savedState) : initGame();
+  });
+  // Recupera el tema guardado o usa false (light) por defecto
+  const [darkMode, setDarkMode] = useState(() => {
+    const savedTheme = localStorage.getItem("darkMode");
+    return savedTheme ? JSON.parse(savedTheme) : false;
+  });
 
   useEffect(() => {
     if (gameState.winner && gameState.winner !== "Board is Full") {
@@ -34,13 +41,24 @@ function App() {
     }
   }, [gameState.winner]);
 
+  useEffect(() => {
+    localStorage.setItem("gameState", JSON.stringify(gameState));
+  }, [gameState]);
+
+  // Guarda el estado del tema en localStorage cada vez que cambia
+  useEffect(() => {
+    localStorage.setItem("darkMode", JSON.stringify(darkMode));
+  }, [darkMode]);
+
   const onSquareClick = (index) => {
     const newState = handleSquareClick(gameState, index);
     setGameState(newState);
   };
 
   const onReset = () => {
-    setGameState(handleReset());
+    const resetState = handleReset();
+    setGameState(resetState);
+    localStorage.removeItem("gameState");
   };
 
   const toggleTheme = () => {
