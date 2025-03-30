@@ -10,7 +10,6 @@ function App() {
     const savedState = localStorage.getItem("gameState");
     return savedState ? JSON.parse(savedState) : initGame();
   });
-  // Recupera el tema guardado o usa false (light) por defecto
   const [darkMode, setDarkMode] = useState(() => {
     const savedTheme = localStorage.getItem("darkMode");
     return savedTheme ? JSON.parse(savedTheme) : false;
@@ -45,7 +44,6 @@ function App() {
     localStorage.setItem("gameState", JSON.stringify(gameState));
   }, [gameState]);
 
-  // Guarda el estado del tema en localStorage cada vez que cambia
   useEffect(() => {
     localStorage.setItem("darkMode", JSON.stringify(darkMode));
   }, [darkMode]);
